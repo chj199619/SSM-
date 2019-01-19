@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.lanqiao.ssm.mapper.UserMapper">
+    <!--开启二级缓存-->
+    <!--配置缓存框架-->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache"
+           eviction="FIFO"
+           flushInterval="60000"
+           size="512"
+           readOnly="true"/>
+    <sql id="baseSql" >
+        select * from user
+    </sql>
+    <select id="selectAllToList" resultType="org.lanqiao.ssm.pojo.User">
+        select * from user
+        <if test="currentPage != null">
+            limit #{currentPage}, #{pageSize}
+        </if>
+    </select>
+    <select id="getUserCount" parameterType="org.lanqiao.ssm.pojo.Condition" resultType="int">
+        select count(1) from user
+
+    </select>
+
+</mapper>
